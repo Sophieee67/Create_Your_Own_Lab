@@ -10,8 +10,24 @@ The `imdb_top_1000` dataset contains information on the top 1000 movies and TV s
 
 The `netflix_titles` dataset contains information on movies and TV shows available on Netflix. The dataset includes details about titles, directors, cast members, release years, ratings, duration, genres, and descriptions. It provides an overview of the content available on one of the world's largest streaming platforms. 
 
-## Question 1- Exploring and Cleaning the Data
+## Load Data and Packages  
+```{r}
 
+```
+
+## Question 1- Cleaning the Data
+Use one dplyr pipeline to clean each dataset 
+
+For IMDb dataset:
+- remove rows with missing IMDb ratings
+- remove `min` from `Runtime` values and convert it to numeric variable called `runtime_min`
+- save cleaned dataset as `imdb_clean`
+
+For Netflix dataset:
+- remove rows with missing titles or release years
+- convert `date_added` into a date variable 
+- rename `listed_in` to `genres`
+- save cleaned dataset as `netflix_clean`
 
 ```{r}
 
