@@ -1,0 +1,31 @@
+---
+title: "IMDb Ratings and Netflix"
+format: html
+editor: visual
+---
+
+## The Data
+
+The `imdb_top_1000` dataset contains information on the top 1000 movies and TV shows ranked by IMDb rating. The dataset includes details such as movie titles, release years, genres, runtime, IMDb ratings, directors, cast members, number of votes, gross earning, and short plot summaries. The data provides insights into some of the highest rated and most popular films according to IMDb users. 
+
+The `netflix_titles` dataset contains information on movies and TV shows available on Netflix. The dataset includes details about titles, directors, cast members, release years, ratings, duration, genres, and descriptions. It provides an overview of the content available on one of the world's largest streaming platforms. 
+
+## Question 1- Exploring and Cleaning the Data
+
+
+```{r}
+
+```
+
+## Question 2
+
+```{r}
+
+```
+
+## Question 3
+
+```{r}
+
+```
+
