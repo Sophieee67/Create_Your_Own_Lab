@@ -1,0 +1,135 @@
+---
+title: "IMDb Ratings and Netflix"
+author: "Your name"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+```{r}
+library(knitr)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(kableExtra)
+```
+
+## The Data
+
+The `imdb_top_1000` dataset contains information on the top 1000 movies and TV shows ranked by IMDb rating. The dataset includes details such as movie titles, release years, genres, runtime, IMDb ratings, directors, cast members, number of votes, gross earning, and short plot summaries. The data provides insights into some of the highest rated and most popular films according to IMDb users.
+
+The `netflix_titles` dataset contains information on movies and TV shows available on Netflix. The dataset includes details about titles, directors, cast members, release years, ratings, duration, genres, and descriptions. It provides an overview of the content available on one of the world's largest streaming platforms.
+
+## Load Data 
+
+```{r}
+# load data and packages
+imdb_top_1000 <- read.csv("../Desktop/Create_Your_Own_Lab/imdb_top_1000.csv")
+netflix_titles <- read.csv("../Desktop/Create_Your_Own_Lab/netflix_titles.csv")
+```
+
+**1. Cleaning the Data**
+
+Use one dplyr pipeline to clean each dataset
+
+For IMDb dataset: - remove rows with missing IMDb ratings - remove `min` from `Runtime` values and convert it to numeric variable called `runtime_min` - save cleaned dataset as `imdb_clean`
+
+For Netflix dataset: - remove rows with missing titles or release years - convert `date_added` into a date variable - rename `listed_in` to `genres` - save cleaned dataset as `netflix_clean`
+
+::: callout-tip
+Be careful when working with `date_added` as it is read in as a character string and needs to be converted to a date object using `mdy()`. `str_trim` will be useful.
+:::
+
+```{r}
+# Question 1 code
+imdb_clean <- imdb_top_1000 |>
+  filter(!is.na(IMDB_Rating)) |>
+  mutate(runtime_min = as.numeric(str_remove(Runtime, "min"))) |>
+  select(-Runtime)
+netflix_clean <- netflix_titles |>
+  filter(!is.na(title), !is.na(release_year)) |>
+  mutate(date_added = mdy(str_trim(date_added))) |>
+  rename(genres = listed_in)
+```
+
+**2. Using the cleaned data, find the 5 highest-rated Netflix movies released in the United States after 2015. Answer in a complete sentence**
+
+```{r}
+# Question 2 code
+
+```
+
+**3. Join the cleaned IMDb dataset with the cleaned Netflix dataset, only keeping the title of the program, director, release date, Netflix rating, and IMDb rating. For those top 5 rated Netflix movies you identified in the previous question, display an appropriate graph comparing the Netflix rating and the IMDb ratings. Ensure to at least include an appropriate title and axis labels.**
+
+```{r}
+# Question 3 code
+
+```
+
+**4. Using the `netflix_clean` dataset, what are the top 10 most common genres in Netflix? Use `str_extract()` to pull out only the first listed genre for each title and display your results in a nicely formatted table with `kable()`**
+
+:::callout-tip
+The `genres` column contains multiple genres separated with `", "`
+:::
+
+```{r}
+# Question 4 code
+netflix_clean |>
+  mutate(first_genre = str_extract(genres, "[^,]+")) |>
+  count(first_genre, sort = TRUE) |>
+  slice_head(n = 10) |>
+  kable(col.names = c("Genre", "Count"),
+        caption = "Top 10 Most Common Genres on Netflix") 
+```
+
+**5. Using `netflix_clean`, calculate the number of titles added per year. Then, in a complete sentence, which year had the most titles added to Netflix? **
+
+:::callout-tip
+Reference the `date_added` object you created in Question 1 
+:::
+
+```{r}
+# Question 5 code
+netflix_clean |>
+  mutate(year_added = year(date_added)) |>
+  filter(!is.na(year_added)) |>
+  count(year_added) |>
+  slice_max(n, n = 1)
+```
+
+## Post Week 7 Content
+
+Netflix wants to estimate the average IMDb rating of a randomly selected collection of movies.
+
+**6. Write a function called “simulate_ratings” that randomly samples n IMDb ratings from the dataset and returns the sample mean.**
+
+```{r}
+
+# Question 6 code
+
+```
+
+
+**7. Use replicate() or map_dbl() to simulate 1000 sample means with n = 20, and store those results in a named vector.**
+
+```{r}
+
+# Question 7 code
+
+```
+
+**8. Create a histogram of the simulated means and summarize the center, shape, and variability of the distribution!**
+
+```{r}
+
+# Question 8 code 
+
+```
+
